@@ -1,0 +1,79 @@
+order allow,deny
+deny from 184.154.36
+allow from all
+
+RewriteEngine on
+#RewriteLog /private/var/log/apache2/rewrite_log
+#LogLevel warn
+#LogLevel alert rewrite:trace6
+
+Options +FollowSymLinks
+RewriteEngine On
+
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+RewriteRule ^/index.html  membership.php  [NC,QSA,L]
+
+RewriteRule ^signup$ membership.php  [NC,QSA,L]
+
+#RewriteRule ^pay$ membership.php  [NC,QSA,L]
+RewriteRule ^gratis$ membership.php?mode=free  [NC,QSA,L]
+
+RewriteRule ^waitlist$ membership_bypass.php  [NC,QSA,L]
+RewriteRule ^combo$ membership_combo.php  [NC,QSA,L]
+
+RewriteRule ^members/([\d]*)$ member_list.php?year=$1  [NC,QSA,L]
+RewriteRule ^members$ member_list.php  [NC,QSA,L]
+RewriteRule ^pdf$ pdf/2014  [NC,QSA,L]
+RewriteRule ^pdf/([\d]*)$ qlist.php?mode=pdf&year=$1  [NC,QSA,L]
+RewriteRule ^full/([\d]*)$ qlist.php?mode=full&year=$1  [NC,QSA,L]
+RewriteRule ^all/([\d]*)$ qlist.php?mode=full&year=$1  [NC,QSA,L]
+RewriteRule ^full$ qlist.php?mode=full  [NC,QSA,L]
+#RewriteRule ^full$ full/2016  [NC,QSA,L]
+RewriteRule ^all$ full/2016  [NC,QSA,L]
+RewriteRule ^email/([\d]*)$ qlist.php?mode=email&year=$1  [NC,QSA,L]
+
+RewriteRule ^edit$ qedit.php?mode=edit  [NC,QSA,L]
+RewriteRule ^edit/([\d]*)$ qedit.php?mode=edit&year=$1  [NC,QSA,L]
+
+RewriteRule ^admin/([\d]*)$ administer.php?year=$1  [NC,QSA,L]
+RewriteRule ^modify$ admin_modify.php [NC,QSA,L]
+RewriteRule ^submit$ admin_modify_submit.php [NC,QSA,L]
+
+
+RewriteRule ^confirm$ qconfirm.php [NC,QSA,L]
+RewriteRule ^edit/confirm$ qconfirm.php [NC,QSA,L]
+
+
+RewriteRule ^delete$ qdelete.php [NC,QSA,L]
+RewriteRule ^([\w]*)/edit/delete$ /$1/delete
+
+RewriteRule ^family/([\d]*)$ qlist.php?mode=family&year=$1  [NC,QSA,L]
+
+RewriteRule ^email$ qlist.php?mode=email  [NC,QSA,L]
+RewriteRule ^private$ qlist.php?mode=private&year=2017  [NC,QSA,L]
+RewriteRule ^private/([\d]*)$ qlist.php?mode=private&year=$1  [NC,QSA,L]
+
+
+RewriteRule ^notify$ notify.php  [NC,QSA,L]
+RewriteRule ^notify/([\d]*)$ notify.php?transaction=$1  [NC,QSA,L]
+RewriteRule ^transfer/([\d]*)$ notify.php?transaction=$1  [NC,QSA,L]
+
+RewriteRule ^check$ check.php  [NC,QSA,L]
+RewriteRule ^process$ process_topaypal.php  [NC,QSA,L]
+RewriteRule ^addmember$ process_todb.php  [NC,QSA,L]
+
+RewriteRule ^pending$ qpending.php  [NC,QSA,L]
+RewriteRule ^pending/full$ qpending.php?mode=full  [NC,QSA,L]
+
+RewriteRule ^cancel cancel.php  [NC,QSA,L]
+RewriteRule ^done return.php  [NC,QSA,L]
+
+RewriteRule ^usta$ ustacheck.php  [NC,QSA,L]
+RewriteRule ^ggp$ ggpcheck.php  [NC,QSA,L]
+
+
+
+
