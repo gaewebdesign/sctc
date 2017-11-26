@@ -167,6 +167,7 @@ $OTOTOSHI = $KOTOSHI-2;
 
 // Query get get members, from the year 
   $query = 'select *,"'.TABLE_PAYPAL.'" as source from '.TABLE_PAYPAL.' where year= "'.$YEAR.'" ';
+//  $query = 'select * from "'.TABLE_PAYPAL.'" where year= "'.$YEAR.'" ';
 
 // Add from bycheck table
   $query .= ' union select *,"'.TABLE_CHECK.'"as source from '.TABLE_CHECK.' where year =  "'.$YEAR.'"';
@@ -175,6 +176,10 @@ $OTOTOSHI = $KOTOSHI-2;
   $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where date(from_unixtime(date)) =  current_date() ';
   $query .= ' and  year =  "'.$YEAR.'"';
   $query .= ' and  custom !=  "done" ';
+
+
+
+  echo $query;
 
 
 // PUT LATEST ON TOP
