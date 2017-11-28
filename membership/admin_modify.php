@@ -1,4 +1,4 @@
-html>
+<html>
 
 <body>
 
@@ -67,7 +67,6 @@ th {
 <br>
 <input name="_PENDING" type="submit" value="Add to Membership">
 
-
 </thead>
 
 
@@ -85,6 +84,8 @@ include "includes.inc";
 
 //  _ID and TABLE values
     $parameters = explode(",",$_POST['radio']);
+
+
 
     $KEYID = $parameters[0];
     $TABLE = $parameters[1];

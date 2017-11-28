@@ -26,6 +26,10 @@ th {
        text-align: left
 }
 
+.smalltime
+{
+   font-size: .7em;
+}
 
 </style>
 
@@ -81,7 +85,7 @@ select fname,lname,date(from_unixtime(date)) from pending where date(from_unixti
 
 <?php
 
-//include "../library/library.php";
+
 include "includes.inc";
 
 include("kotoshi.inc");
@@ -89,7 +93,6 @@ include("kotoshi.inc");
 
 $DIR = "membership";
 if( OnLocalHost() ) $DIR = "~roger/sctc/membership";       
-
 
 //$KOTOSHI  = $YEAR; //
 $KYONEN   = $KOTOSHI-1;
@@ -173,13 +176,18 @@ $OTOTOSHI = $KOTOSHI-2;
   $query .= ' union select *,"'.TABLE_CHECK.'"as source from '.TABLE_CHECK.' where year =  "'.$YEAR.'"';
 
 // Add from pending table
-  $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where date(from_unixtime(date)) =  current_date() ';
+//  $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where date(from_unixtime(date)) =  current_date() ';
+//  $query .= ' and  year =  "'.$YEAR.'"';
+
+// select fname,lname,from_unixtime(date) from pending where from_unixtime(date) > date_add( now(), interval -72 hour);
+   $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where from_unixtime(date) >  date_add(now(),interval -24 hour) ';
+
+//  $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where from_unixtime(date) >  date_add(now(),interval -11 minute) ';
   $query .= ' and  year =  "'.$YEAR.'"';
   $query .= ' and  custom !=  "done" ';
 
 
-
-  echo $query;
+//  echo $query;
 
 
 // PUT LATEST ON TOP
@@ -211,7 +219,7 @@ $OTOTOSHI = $KOTOSHI-2;
 //   if( $_GET["mode"] != "pdf"){
     echo "<center>$YEAR ** RESIDENTS: $res NONRESIDENTS: $non **</center>";
 //  print("last updated ".ltrim( date("m/d/Y", strtotime($row["update_time"])),"0")."<br>"  );
-    print("click top row to sort\n"  );
+//  print("click top row to sort\n"  );
 
 //  }
 
@@ -222,11 +230,11 @@ $OTOTOSHI = $KOTOSHI-2;
   $abbreviations = array( "jose" => "SJ", "sunnyvale" => "Su" ,"clara"=>"SC",
       "campbell"=>"Cpb","saratoga"=>"Srt","milpitas"=>"Mlp","mountain"=>"MV",
       "burl"=>"Blg","palo"=>"PA","fremont"=>"Fmt","soquel"=>"Soq",
-      "cupertino"=>"Cup","gatos"=>"LG","sereno"=>"MS","menlo"=>"MP",
+      "cupertino"=>"Cup","daly"=>"DC","gatos"=>"LG","hillsb"=>"HlB","sereno"=>"MS","menlo"=>"MP",
       "union"=>"UC","los altos"=>"LA","newark"=>"Nwk","menlo"=>"MP",
       "capitola"=>"Cap","san carlos"=>"SanC","millbrae"=>"Milb","menlo"=>"MP",
       "mtn"=>"MV","san carlos"=>"SanC","millbrae"=>"Milb","menlo"=>"MP",
-      "redwood"=>"RC","mateo"=>"SM","morgan"=>"MH","sunny" => "Su",
+      "redwood"=>"RC","mateo"=>"SM","morgan"=>"MgH","sunny" => "Su",
       "san francisco"=>"SF","emerald hills"=> "EH", "hayward"=>"Hay",
       "brisbane"=>"Bris","san ramon"=>"SR"
 
@@ -271,6 +279,7 @@ $OTOTOSHI = $KOTOSHI-2;
 
      $DATE = date(" m/d/y",$row[DATE]);
 
+
      if(  $_GET["mode"] != "family")      echo "<tr>";
 
      $RES = "";
@@ -291,7 +300,15 @@ $OTOTOSHI = $KOTOSHI-2;
        echo "<td>".$row[YEAR].$RES;//."</td>";
 
        $color="black";
-       if($source_id == TABLE_PENDING ) $color="red";
+
+       $TIME="";
+       if($source_id == TABLE_PENDING ) {
+			  $color="red";
+			  $TIME = date(" m/d/y h:i:s A",$row[DATE]);
+                          $TIME = date("h:i:s A",$row[DATE]);
+			  }
+
+
 
        echo '<td style="color:'.$color.';">'.$FIRSTNAME."</td>";
        echo '<td style="color:'.$color.';">'.$LASTNAME."</td>";
@@ -300,8 +317,19 @@ $OTOTOSHI = $KOTOSHI-2;
        echo '<td style="color:'.$color.';">'.$row[ZIP]."</td>";
        echo '<td style="color:'.$color.';">'.$EMAIL."</td>";
        echo '<td style="color:'.$color.';">'.$NTRP."</td>";
-       echo "<td>".$DATE."</td>";
 
+
+
+       if( $source_id == TABLE_PENDING){
+           echo '<td style="font-size:.7em">'.$DATE;
+//         echo '<br class="smalltime">'.$TIME;
+           echo '<br>'.$TIME;
+//           echo '<br style="font-size:.4em;">'.$TIME;
+           echo "</td>";
+       }else{
+           echo '<td>'.$DATE;
+
+       }
 //       echo "\n";
 
   }
