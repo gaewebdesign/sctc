@@ -80,17 +80,63 @@ function pending(){
         println(" Already a SCTC member ");
      }else{
        println( "transferring.... ");
-       println( "TABLE ".$keyTABLE );
-       println( "_ID ".$keyID );
-       println( "CUSTOM ".$keyCUSTOM );
-       cp($keyCUSTOM , TABLE_CHECK , $verbose=false );
-     }
+
+       println( " ");
+//     println( "TABLE ".$keyTABLE );
+//     println( "_ID ".$keyID );
+//     println( "CUSTOM ".$keyCUSTOM );
+
+// MEMBER INFO
+       $con=DBMembership();
+       $query = "select * from ".$keyTABLE." where custom=".$keyCUSTOM;
+
+       $qr    = mysqli_query($con, $query);
+       $row = mysqli_fetch_assoc($qr); 
+       $NAME    = $row[FNAME]." ".$row[LNAME];
+       $ADDRESS = $row[ADDRESS];
+       $CITY = $row[CITY]." ".$row[ZIP];
+       $EMAIL = $row[EMAIL]."@".$row[URL];;
+       if(strlen($EMAIL)<3) $EMAIL="" ;
+
+       println( $NAME );
+       println( $ADDRESS);
+       println( $CITY." ".$ZIP );
+       println( $EMAIL );
+
+
+// COPY OVER
+        cp($keyCUSTOM , TABLE_CHECK , $verbose=false );
+
+
+// SEND EMAIL
+        sendemail( $NAME, $ADDRESS, $CITY, $EMAIL,"Player copied from pending");
+      }
+
 }
 
 function println($v)
 {
   echo $v;
   echo "<br>";
+
+}
+
+function sendemail( $NAME, $ADDRESS, $CITY, $EMAIL,$msg){
+
+        $to = "notify@sctennisclub.org";
+        $subject = "SCTC Membership (".$NAME.")";
+
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers .= "From: membership@sctennisclub.org  \r\n";
+
+        $message = $msg."<br>";
+        $message .= "$NAME <br>";
+        $message .= "$ADDRESS <br>";
+        $message .= "$CITY <br>";
+        $message .= "$EMAIL <br>";
+
+        $r=mail($to,$subject,$message,$headers); 
 
 }
 
@@ -120,6 +166,14 @@ function show ( ){
 
 }
 
+// update pending set fname="Jean",lastname=Hoggatt where _id=183;
+
+function queue( $tag, $value){
+
+    return ",".$tag.' = "'.$value.'"';
+
+}
+
 function modify( ) {
 
 
@@ -128,52 +182,49 @@ function modify( ) {
   $keyID    =  $_POST["keyID"];
   $keyTABLE = $_POST["keyTABLE"];
 
-  $query = query( $keyTABLE , $keyID, FNAME , $_POST[FNAME ] );
-//  $query = "update $keyTABLE set ".LNAME.'= "'.$_POST[LNAME].'" where _id="'.$keyID.'"';
-  $query_results=mysqli_query($con, $query);
+  $query = "update $keyTABLE ";
+  $query .= ' set '.FNAME.'='.' "'.$_POST[FNAME].'"';
 
-  $query = query( $keyTABLE , $keyID, LNAME , $_POST[LNAME ] );
-  $query_results=mysqli_query($con, $query);
-
-  $query = query( $keyTABLE , $keyID, GENDER , $_POST[GENDER ] );
-  $query_results=mysqli_query($con, $query);
-
-  $query = query( $keyTABLE , $keyID, NTRP , $_POST[NTRP ] );
-  $query_results=mysqli_query($con, $query);
-
-  $query = query( $keyTABLE , $keyID, ADDRESS , $_POST[ADDRESS ] );
-  $query_results=mysqli_query($con, $query);
-
-  $query = query( $keyTABLE , $keyID, CITY , $_POST[CITY ] );
-  $query_results=mysqli_query($con, $query);
-
-  $query = query( $keyTABLE , $keyID, ZIP , $_POST[ZIP] );
-  $query_results=mysqli_query($con, $query);
-
-  $query = query( $keyTABLE , $keyID, EMAIL , $_POST[EMAIL] );
-  $query_results=mysqli_query($con, $query);
-
-  $query = query( $keyTABLE , $keyID, URL , $_POST[URL] );
-  $query_results=mysqli_query($con, $query);
-
-  $query = query( $keyTABLE , $keyID, CODE , $_POST[CODE] );
-  $query_results=mysqli_query($con, $query);
+  $query .= queue(LNAME,$_POST[LNAME]);
+  $query .= queue(GENDER,$_POST[GENDER]);
+  $query .= queue(NTRP,$_POST[NTRP]);
+  $query .= queue(ADDRESS,$_POST[ADDRESS]);
+  $query .= queue(CITY,$_POST[CITY]);
+  $query .= queue(ZIP,$_POST[ZIP]);
+  $query .= queue(EMAIL,$_POST[EMAIL]);
+  $query .= queue(URL,$_POST[URL]);
+  $query .= queue(CODE,$_POST[CODE]);
 
   $PHONE = $_POST[PHONEPRE]."-".$_POST[PHONEPOST];
 
   if( strlen($PHONE) == 8){
-     $query = query( $keyTABLE , $keyID, PHONE , $PHONE );
-     $query_results=mysqli_query($con, $query);
+     $query .= queue(PHONE, $PHONE);
   }
 
+  $query .= ' where _id ="'.$keyID.'"';
+  $query_results=mysqli_query($con, $query);
 
-  println("Modified ");
-  println($_POST[FNAME]."  ".$_POST[LNAME]);
-  println($_POST[ADDRESS]);
-  println($_POST[CITY]." ".$_POST[ZIP]);
-  println($_POST[GENDER]." ".$_POST[NTRP]);
-  println($_POST[CODE]." ".$PHONE);
 
+
+// MEMBER INFO
+  println("Modified <br>");
+  $con=DBMembership();
+  $query = "select * from ".$keyTABLE." where _id=".$keyID;
+
+  $qr    = mysqli_query($con, $query);
+  $row = mysqli_fetch_assoc($qr); 
+
+  $EMAIL = $row[EMAIL]."@".$row[URL];;
+  if(strlen($EMAIL)<3) $EMAIL="" ;
+
+  $NAME =  $row[FNAME]." ".$row[LNAME];
+  $CITY =  $row[CITY]." ".$row[ZIP];
+  println( $NAME );
+  println( $row[ADDRESS]);
+  println( $CITY );
+  println( $EMAIL );
+
+  sendemail( $NAME, $row[ADDRESS], $CITY, $EMAIL,"Player modified (".$NAME.")" );
 
 }
 
@@ -202,6 +253,7 @@ function _delete() {
 
 }
 
+ echo "*********";
   return;
 
   foreach ($_POST['checkboxname'] as $key => $value){
