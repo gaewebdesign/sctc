@@ -41,8 +41,10 @@ RewriteRule ^email$ qlist.php?mode=email  [NC,QSA,L]
 
 
 #Adminstration
+RewriteRule ^admin([\d]*)$ administer.php?year=$1  [NC,QSA,L]
 RewriteRule ^admin/([\d]*)$ administer.php?year=$1  [NC,QSA,L]
 RewriteRule ^admin$ administer.php?year=2020  [NC,QSA,L]
+RewriteRule ^admin/modify$ ../modify [NC,QSA,L]
 RewriteRule ^modify$ admin_modify.php [NC,QSA,L]
 RewriteRule ^submit$ admin_modify_submit.php [NC,QSA,L]
 

@@ -94,6 +94,7 @@ include("kotoshi.inc");
 $DIR = "membership";
 if( OnLocalHost() ) $DIR = "~roger/sctc/membership";       
 
+
 //$KOTOSHI  = $YEAR; //
 $KYONEN   = $KOTOSHI-1;
 $OTOTOSHI = $KOTOSHI-2;
@@ -108,9 +109,10 @@ $OTOTOSHI = $KOTOSHI-2;
  }
 
 
-   echo "<a style=text-decoration:none href=/$DIR/admin/$OTOTOSHI>$OTOTOSHI</a>&nbsp";
-   echo "<a style=text-decoration:none href=/$DIR/admin/$KYONEN>$KYONEN</a>&nbsp";
-   echo "<a style=text-decoration:none href=/$DIR/admin/$KOTOSHI>$KOTOSHI</a>&nbsp";
+
+   echo "<a style=text-decoration:none href=/$DIR/admin$OTOTOSHI>$OTOTOSHI</a>&nbsp";
+   echo "<a style=text-decoration:none href=/$DIR/admin$KYONEN>$KYONEN</a>&nbsp";
+   echo "<a style=text-decoration:none href=/$DIR/admin$KOTOSHI>$KOTOSHI</a>&nbsp";
 
 //   $MODE=$_GET["mode"];
 ?>
@@ -133,7 +135,8 @@ $OTOTOSHI = $KOTOSHI-2;
 <tr>
 
 
-<form id="_MODIFY"  action="../modify" method="post">
+<!--<form id="_MODIFY"  action="../modify" method="post"> -->
+<form id="_MODIFY"  action="./modify" method="post">
 <input name="ModifyForm" type="submit" value=" MODIFY ">
 
 
@@ -179,7 +182,7 @@ $OTOTOSHI = $KOTOSHI-2;
 //  $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where date(from_unixtime(date)) =  current_date() ';
 //  $query .= ' and  year =  "'.$YEAR.'"';
 
-// select fname,lname,from_unixtime(date) from pending where from_unixtime(date) > date_add( now(), interval -72 hour);
+// select fname,lname,from_unixtime(date) from pending where from_unixtime(date) > date_add( now(), interval - 6 hour);
    $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where from_unixtime(date) >  date_add(now(),interval -24 hour) ';
 
 //  $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where from_unixtime(date) >  date_add(now(),interval -11 minute) ';
