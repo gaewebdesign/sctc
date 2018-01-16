@@ -121,6 +121,27 @@ function println($v)
 
 }
 
+function message($sub , $msg){
+
+        $to = "notify@sctennisclub.org";
+        $subject = $subj;
+
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers .= "From: membership@sctennisclub.org  \r\n";
+
+        $message = $msg."<br>";
+        $message .= "$NAME <br>";
+        $message .= "$ADDRESS <br>";
+        $message .= "$CITY <br>";
+        $message .= "$EMAIL <br>";
+
+        $r=mail($to,$subject,$msg,$headers); 
+
+
+
+}
+
 function sendemail( $NAME, $ADDRESS, $CITY, $EMAIL,$msg){
 
         $to = "notify@sctennisclub.org";
@@ -176,11 +197,30 @@ function queue( $tag, $value){
 
 function modify( ) {
 
+  $keyID    =  $_POST["keyID"];
+  $keyTABLE = $_POST["keyTABLE"];
 
   $con =  DBMembership();
 
-  $keyID    =  $_POST["keyID"];
-  $keyTABLE = $_POST["keyTABLE"];
+// GET CURRENT INFORMATION
+  $query = "select * from ".$keyTABLE." where _id=".$keyID;
+  $qr    = mysqli_query($con, $query);
+  $row = mysqli_fetch_assoc($qr); 
+
+  $_NAME =  $row[FNAME]." ".$row[LNAME];
+  $_CITY =  $row[CITY]." ".$row[ZIP];
+  $_EMAIL = $row[EMAIL]."@".$row[URL];;
+  if(strlen($_EMAIL)<3) $_EMAIL="" ;
+  $_PHONE = "(".$row[CODE].") ".$row[PHONE];
+
+  $_GENDER = "(".$row[CODE].") ".$row[PHONE];
+
+  if( strlen($_PHONE) < 8){
+   $_PHONE = "";
+  }
+
+
+// ******
 
   $query = "update $keyTABLE ";
   $query .= ' set '.FNAME.'='.' "'.$_POST[FNAME].'"';

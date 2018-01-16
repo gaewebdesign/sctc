@@ -268,6 +268,8 @@ for($j=0 ; $j < count($_teaminfo[0]) ; $j++){
 
 //      Cut off parsing
         $find=0;
+        if( $teamid == 77091) $find=FINISH;
+        if( $teamid == 77361) $find=FINISH;
         if( $teamid == 75074) $find=FINISH;
         if( $teamid == 72039) $find=FINISH;
         if( $teamid == 62435) $find=FINISH;

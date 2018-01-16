@@ -144,7 +144,7 @@ $OTOTOSHI = $KOTOSHI-2;
 <th scope="col">Year</th>
 <th scope="col">First</th>
 <th scope="col">Last</th>
-<th scope="col">Address</th>
+<!--<th scope="col">Address</th> -->
 <th scope="col">City</th>
 <th scope="col">Zip</th>
 <th scope="col">Email</th>
@@ -185,12 +185,12 @@ $OTOTOSHI = $KOTOSHI-2;
 // select fname,lname,from_unixtime(date) from pending where from_unixtime(date) > date_add( now(), interval - 6 hour);
    $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where from_unixtime(date) >  date_add(now(),interval -24 hour) ';
 
-//  $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where from_unixtime(date) >  date_add(now(),interval -11 minute) ';
+//  $query .= ' union select *,"'.TABLE_PENDING.'"as source from '.TABLE_PENDING.' where from_unixtime(date) >  date_add(now(),interval -60 minute) ';
   $query .= ' and  year =  "'.$YEAR.'"';
   $query .= ' and  custom !=  "done" ';
 
 
-//  echo $query;
+//   echo $query;
 
 
 // PUT LATEST ON TOP
@@ -315,7 +315,7 @@ $OTOTOSHI = $KOTOSHI-2;
 
        echo '<td style="color:'.$color.';">'.$FIRSTNAME."</td>";
        echo '<td style="color:'.$color.';">'.$LASTNAME."</td>";
-       echo '<td style="color:'.$color.';">'.$row[ADDRESS]."</td>";
+//     echo '<td style="color:'.$color.';">'.$row[ADDRESS]."</td>";
        echo '<td style="color:'.$color.';">'.$CITY."</td>";
        echo '<td style="color:'.$color.';">'.$row[ZIP]."</td>";
        echo '<td style="color:'.$color.';">'.$EMAIL."</td>";
