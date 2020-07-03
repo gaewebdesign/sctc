@@ -16,6 +16,7 @@
 <script>
   window.onload = function(){
        $("#2013Board").hide();
+       $("#PastNewsletter").hide();
 
   };
 
@@ -40,26 +41,57 @@
     </tr>
     <tr>
       <td height="35" align="left" valign="middle" class="navBar">
+
+      <a href="http://www.facebook.com/santaclaratennisclub" class="navLink" style="vertical-align:text-bottom"><img src="fb.png"</a> | 
+
       <a href="http://www.norcal.usta.com" class="navLink">USTA Norcal</a> | 
+      <a href="https://www.ustanorcal.com/organization.asp?id=3483">USTA SCTC</a> |
+
       <a href="http://www.lifetimetennis.com" clas="navLink">Lifetime Tennis </a> |
+      <a href="http://www.tennis-warehouse.com" class="navLink"> Tennis Warehouse</a> 
+
+
+<!--
 <a href="http://www.ci.santa-clara.ca.us" class="navLink">City of Santa Clara</a> |<a href="http://www.tennis-warehouse.com" class="navLink"> Tennis Warehouse</a> |<a href="http://santaclaraca.gov/index.aspx?page=1455" class="navLink"> Find a Tennis Court</a> |<a href="http://www.usptafindapro.com/index.cfm?menuitemid=654" class="navLink"> Find a Teaching Pro</a></td>
+-->
+
     </tr>
   </table>
   <table width="900" border="0" cellspacing="0" cellpadding="0">
     <tr>
    <td width="150" valign= "top" bgcolor="#5B2A7D">
+   <a href="index.html" class="navigation">Home</a>
    <a href="membership.html" class="navigation">Membership</a>
    <a href="mixers.html" class="navigation">Mixers</a>
    <a href="board.html" class="navigation">Board Meetings</a>
    <a href="events.html" class="navigation">Events</a>
    <a href="clinics.html" class="navigation">Clinics</a>
-   <a href="index.html" class="navigation">Home</a></td>
-      <td width="500" align="left" valign= "top"><h3>BOARD MEETINGS  </h3>
+
+    <a href="captains.html" class="navigation">Captains</a>
+
+</td>
+   <td width="500" align="left" valign= "top"><h3>BOARD MEETINGS  </h3>
 
 <p>
+<b style="font-size:20px;"> Club Info </b> 
+<p>
+ <a href="documents/sctcbylaws.pdf", style="font-size:16px"> By-laws</a><br>
+<!-- 501c EIN # 77-0317485 <br> -->
+ <a href="documents/determinationletter.pdf", style="font-size:16px"> 501c Determination Letter</a><br>
+ <br>-----</br>
+ <a href= "documents/private/CertificateofInsurance.pdf">Certificate of Insurance </a><br>
+ <a href= "documents/private/SantaClaraTennisClubGLPOLICY.pdf" >Liability Policy</a>
+
+
+<br>
+
 
 
 <!--
+<p>
+
+
+
 <?php
 $months = array("J","January","February","March","April","May","June","July","August","September","October","November","December");
 function scanyear($year, $m)
@@ -79,42 +111,80 @@ function scanyear($year, $m)
 ?>
 -->
 
-<p><b><a href="javascript:Toggle('BoardNotes');">Board Notes</a></b>
+
+<p><b>Board Notes</b>
 <p>
-<a href="./board/2017_4_6.pdf">2017 April 6</a>&nbsp;<br>
 
+<?php
 
+ docs("./board/2020", "2020");
+ docs("./board/2019", "2019");
+
+/*
+<a href="./board/2019_5_2.pdf">2019 May 2</a>&nbsp;<br>
+<a href="./board/2018_11_15.pdf">2018 Nov 15</a>&nbsp;<br>
+<a href="./board/2018_5_3.pdf">2018 May 3</a>&nbsp;<br>
+<a href="./board/2018_3_1.pdf">2018 March 1</a>&nbsp;<br>
+*/
+
+?>
 
 <a href="javascript:Toggle('2013Board');">Past years...</a> <br>        
 
 <div id="2013Board">
 <p>
 
-<a href="./board/2015_10_14.pdf">2015 October 14</a>&nbsp;<br>
+<?php
+ docs("./board/2018", "2018");
+ docs("./board/2017", "2017");
 
-<a href="./board/2015_7_15.pdf">2015 July 15</a>&nbsp;<br>
-<a href="./board/2015_7_15.pdf">2015 June 24</a>&nbsp;<br>
-<a href="./board/2015_3_18.pdf">2015 March 18</a>&nbsp;<br>
-<a href="./board/2015_2_17.pdf">2015 February 17</a>&nbsp;<br>
+?>
 
-
-<a href="./board/2014_9_25.pdf">2014 September 25</a>&nbsp;<br>
-<a href="./board/2014_6_12.pdf">2014 June 12</a>&nbsp;<br>
-<a href="./board/2014_5_29.pdf">2014 May 29</a>&nbsp;<br>
-<a href="./board/2014_4_24.pdf">2014 April 24</a>&nbsp;<br>
-<a href="./board/2014_3_20.pdf">2014 March 20</a>&nbsp;<br>
-
-
-
-<a href="./board/2013_5_16.pdf">2013 May 16</a>&nbsp;<br>
-<a href="./board/2013_4_18.pdf">2013 April 18</a>&nbsp;<br>
-<a href="./board/2013_3_21.pdf">2013 March 21</a>&nbsp;<br>
-<a href="./board/2013_2_21.pdf">2013 February 21</a>&nbsp;<br>
-<a href="./board/2013_1_24.pdf">2013 January 24</a>&nbsp;<br>
-<a href="./board/2012_8_16.pdf">2012 August 16</a>&nbsp;<br>
-<a href="./board/2012_9_20.pdf">2012 September 20</a>&nbsp;<br>
 </div>
 
+
+<p>
+<p>Newsletter<br>
+<p>
+<?php
+
+ docs("./newsletter/2019", "2019");
+
+function docs( $dir , $title){
+    $d = scandir($dir);
+
+    $p = preg_grep("/.pdf/i", $d );
+    $p = array_values($p);
+
+    print($title);
+    print("<br>");
+    foreach( $p as $index => $f){
+
+        echo '<a href="'.$dir."/".$f.'">';
+        $f = str_replace("_"," ",$f);
+        $f = str_replace(".pdf","",$f);
+
+        echo $f;
+
+        echo "</a><br>";
+
+    }
+    print("<p>");
+}
+?>
+
+<a href="javascript:Toggle('PastNewsletter');">Past Newsletters...</a> <br>        
+<div id="PastNewsletter">
+<p>
+<?php
+ docs("./newsletter/2018", "2018");
+ docs("./newsletter/2017", "2017");
+ docs("./newsletter/2016", "2016");
+?>
+<p>
+
+
+</div>
 
 
         <p>The Santa Clara Tennis Club Board meets at the Santa Clara Community Center at 969 Kiely Blvd.
@@ -143,13 +213,13 @@ function scanyear($year, $m)
         <p class="medium">&nbsp;</p>
         <table width="450" border="0" cellspacing="0" cellpadding="2" class="table">
           <caption class="tablecap">
-          2017 BOARD MEMBERS
+          2019 BOARD MEMBERS
           </caption>
           <tr>
 <!--            <td><a href="mailto:pres &#64;sctennisclub.org" class="blueLink">President</a></td> -->
             <td>President</a></td>
-            <td>Carrie Bell</td>
-            <td>prezz@sctennislub.org</td>
+            <td>Nathan Michael Mertz</td>
+            <td>prezz@sctennisclub.org</td>
           </tr>
           <tr>
 <!--            <td><a href="mailto:vp&#64;sctennisclub.org" class="blueLink">Vice President</td>-->
@@ -161,20 +231,20 @@ function scanyear($year, $m)
           <tr>
 <!--            <td><a href="mailto:secretary&#64;sctennisclub.org" class="blueLink">Secretary</td> -->
             <td> Secretary</td>
-            <td>Laura Fletcher</td>
+            <td>Brook Lee</td>
             <td>sec@</td>
           </tr>
 
           <tr>
 <!--            <td><a href="mailto:treasurer&#64;sctennisclub.org" class="blueLink">Treasurer</td> -->
             <td> Treasurer</td>
-            <td>Angela Lee</td>
+            <td>Carrie Bell</td>
             <td>treas@</td>
           </tr>
           <tr>
 <!--      <td><a href="mailto:membership &#64;sctennisclub.org" class="blueLink">Membership</a></td> -->
             <td> Membership</a></td>
-            <td>Lori Ventura</td>
+            <td></td>
             <td>memb@</td>
           </tr>
           <tr>
@@ -189,41 +259,51 @@ function scanyear($year, $m)
             <td>Helen Matsumoto</td>
             <td>socmed@</td>
           </tr>
+<!--
 		  <tr>
             <td>Social Events</td>
-            <td>Lucy Harendza</td>
+            <td></td>
             <td>soc@</td>
           </tr>
+-->
 		  <tr>
 <!--            <td><a href="mailto:clinics &#64;sctennisclub.org" class="blueLink">Clinics</a></td>-->
             <td> Clinics</a></td>
-
+            <td>Ken Okazaki</td>
+<!--
             <td>Onofre 'Hondo' DeSouza </td>
+-->
             <td>clinic@</td>
           </tr>
 
             <tr>
 <!--            <td><a href="mailto:mixers&#64;sctennisclub.org" class="blueLink">Mixers</a></td>-->
 
-            <td> Mixers</a></td>
+            <td> Socials</a></td>
 
-            <td>Dolores Salazar
-            <td>mix@</td><tr>
+            <td>Ray Molseed
+            <td>social@</td><tr>
           </tr>
           <tr>
 <!--        <td><a href="mailto:usta &#64;sctennisclub.org" class="blueLink">USTA</a></td> -->
             <td> USTA</a></td>
 
-            <td>Nathan Mertzz </td>
+            <td>Helen Matsumoto</td>
             <td>ustarep@ </td>
 <!--        <td>ustarep@ 408-691-5758</td> -->
           </tr>
 		  <tr>
 <!--         <td><a href="mailto:web &#64;sctennisclub.org" class="blueLink">Website</a></td> -->
-            <td> Website</a></td>
-            <td>Roger Okamoto </td>
-            <td>website@ </td>
+
+		  <tr>
+<!--         <td><a href="mailto:web &#64;sctennisclub.org" class="blueLink">Website</a></td> -->
+            <td> Board</a></td>
+            <td> </td>
+            <td>board@ </td>
           </tr>
+
+
+
           <tr>
             <td><a href="mailto:tenezpro &#64;comcast.net" class="blueLink">Tennis Instruction</a></td>
             <td>Lifetime Tennis </td>
@@ -243,13 +323,21 @@ function scanyear($year, $m)
         </td>
       <td width="250" align="left" valign="top" bgcolor="#5B2A7D">
 	  
-	  <h2>2017 Meeting Schedule </h2>
+	  <h2>2020 Meeting Schedule </h2>
       <p class="large"><font color="#ABCDEF">
+		February 19, 2020  <br />
+		May 13, 2020  <br />
+		July 8, 2020 <br />
+		October 14, 2020  <br />
       
+<!--
 		April 6, 2017  <br />
 		June 1, 2017  <br />
 		August 31, 2017 <br />
 		October 5, 2017  <br />
+-->
+
+
 		</p>
       </td>
     </tr>
@@ -263,7 +351,7 @@ function scanyear($year, $m)
   <table width="900" border="0" cellspacing="0" cellpadding="0">
     <tr align="left" valign="middle">
       <td height="30" class="navBar">
-      <a href="board.html" class="siteLink">About Us</a> | <a href="membership.html" class="siteLink">Membership</a> | <a href="mailto: sctcinfo@sctennisclub.org" class="siteLink">Contact Us</a> | <span class="style1 style3">&copy;2017 Santa Clara Tennis Club </span></td>
+      <a href="board.html" class="siteLink">About Us</a> | <a href="membership.html" class="siteLink">Membership</a> | <a href="mailto: sctcinfo@sctennisclub.org" class="siteLink">Contact Us</a> | <span class="style1 style3">&copy;2019 Santa Clara Tennis Club </span></td>
     </tr>
   </table>
 </div>
