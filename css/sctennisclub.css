@@ -1,0 +1,155 @@
+/* CSS Document (sctc.css) */
+
+p{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	color: #000000;
+	padding: 0px 10px 0px 10px;
+}
+
+
+h1{
+//	color: #CC3300;
+	color: #5B2A7D;  // purple
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 150%;
+	margin: 0px;
+	padding: 0px;
+}
+
+h2{
+	color: #FFFFFF;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 90%;
+	font-style: bold;
+	margin: 10px;
+	padding: 0px;
+}
+
+
+h3{
+	color: #CC3300;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 80%;
+	font-style: bold;
+	margin: 10px;
+	padding: 0px;
+}
+
+h4{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	font-style: bold;
+	margin: 10px;
+	padding: 0px;
+}
+
+a{
+	text-decoration: none;
+}
+
+ul{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	color: #000000;
+#	padding: 0px 10px 10px 10px;
+# 	list-style-type: none;
+}
+
+
+
+
+.navBar {
+	color: #006699;
+	background-color: #FFFFFF;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.navLink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 90%;
+	font-style: normal;
+        color: #006699;
+
+}
+
+.siteLink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	font-style: normal;
+	color: #006699;
+}
+
+.blueLink {
+	color: #006699;
+}
+
+.whiteLink{
+	color: #FFFFFF;
+}
+
+.redLink{
+	color: #CC3300;
+}
+
+.navigation{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 90%;
+	font-style: normal;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+//	background-color: #006699;
+	background-color: #5B2A7D;
+	display: block;
+	padding: 8px;
+	width: 150px;
+}
+
+
+.navigation:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 90%;
+	font-style: normal;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+	background-color: #0099CC;
+	background-color: #662865;
+	display: block;
+	padding: 8px;
+	width: 150px;
+}
+
+.navigation:active{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 90%;
+	font-style: normal;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+	background-color: #CC3300;
+	display: block;
+	padding: 8px;
+	width: 150px;
+}
+
+p.large{
+line-height: 200%
+}
+
+p.medium{
+line-height: 150%
+}
+
+.table{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	padding: 2px 0px 2px 10px;
+}
+
+.tablecap{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 110%;
+	font-style: bold;
+}
